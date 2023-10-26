@@ -88,5 +88,5 @@ const Login = ({ handleFormToggle, location }) => {
 export default Login;
 Login.propTypes = {
   handleFormToggle: PropTypes.func,
-  location: PropTypes.string,
+  location: PropTypes.object,
 };
