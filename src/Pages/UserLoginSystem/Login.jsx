@@ -6,7 +6,7 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ handleFormToggle }) => {
+const Login = ({ handleFormToggle, location }) => {
   const { userLoginWithEmailAndPassword } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ const Login = ({ handleFormToggle }) => {
     userLoginWithEmailAndPassword(email, password)
       .then(() => {
         toast.success("User login success .......");
-        navigate("/");
+        navigate(location?.state ? location?.state : "/");
       })
       .catch((err) => {
         toast.error("Login failed !!!");
@@ -88,4 +88,5 @@ const Login = ({ handleFormToggle }) => {
 export default Login;
 Login.propTypes = {
   handleFormToggle: PropTypes.func,
+  location: PropTypes.string,
 };

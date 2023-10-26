@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
-const Signup = ({ handleFormToggle }) => {
+const Signup = ({ handleFormToggle, location }) => {
   const navigate = useNavigate();
 
   const { signUpWithEmailAndPassword, updateUserNameAndPhoto } =
@@ -33,7 +33,7 @@ const Signup = ({ handleFormToggle }) => {
       .then(() => {
         toast.success("User account creation successfull ....");
         updateUserNameAndPhoto(name)
-          .then(() => navigate("/"))
+          .then(() => navigate(location?.state ? location?.state : "/"))
           .catch((err) => {
             toast.error("something went wrong !!!");
             console.log(err);
@@ -116,4 +116,5 @@ const Signup = ({ handleFormToggle }) => {
 export default Signup;
 Signup.propTypes = {
   handleFormToggle: PropTypes.func,
+  location: PropTypes.object,
 };
