@@ -33,12 +33,11 @@ const Checkout = () => {
     };
 
     axios
-      .post("http://localhost:5174/checkouts", info)
+      .post("http://localhost:5174/checkouts", info, { withCredentials: true })
       .then((res) => {
-        if (res.data.data.insertedId) {
-          toast.success("Your order has been placed .....");
-          e.target.reset();
-        }
+        console.log(res);
+        toast.success("Your order has been placed .....");
+        e.target.reset();
       })
       .catch((err) => {
         toast.error("something went wrong ....");

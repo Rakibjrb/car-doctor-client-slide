@@ -17,7 +17,9 @@ const Orders = ({ order, ordersAfterDelete }) => {
 
   const handleOrderDelete = (id) => {
     axios
-      .delete(`http://localhost:5174/cart/orders/${id}`)
+      .delete(`http://localhost:5174/cart/orders/${id}`, {
+        withCredentials: true,
+      })
       .then((res) => {
         if (res.data.data.deletedCount > 0) {
           toast.success("data deleted ....");

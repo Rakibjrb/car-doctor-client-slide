@@ -14,7 +14,7 @@ const ApproveRoute = () => {
   const orderAfterApprove = (id) => {
     const url = `http://localhost:5174/admin/order/approve`;
     axios
-      .patch(url, { id, status: "Approved" })
+      .patch(url, { id, status: "Approved" }, { withCredentials: true })
       .then((res) => {
         if (res.data.data.modifiedCount > 0) {
           const notApproved = orders.filter((order) => order._id !== id);
@@ -34,7 +34,9 @@ const ApproveRoute = () => {
 
   useEffect(() => {
     const url = `http://localhost:5174/cart/orders/admin/rakibul572157`;
-    axios.get(url).then((res) => setOrders(res.data.data));
+    axios
+      .get(url, { withCredentials: true })
+      .then((res) => setOrders(res.data.data));
   }, []);
 
   return (

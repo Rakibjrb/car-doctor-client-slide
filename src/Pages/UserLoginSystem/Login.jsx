@@ -18,13 +18,12 @@ const Login = ({ handleFormToggle, location }) => {
     userLoginWithEmailAndPassword(email, password)
       .then(() => {
         toast.success("User login success .......");
+        const user = { email };
         axios
-          .post(
-            "http://localhost:5174/jwt/token",
-            { email },
-            { withCredentials: true }
-          )
-          .then((res) => console.log(res.data.data))
+          .post("http://localhost:5174/jwt/token", user, {
+            withCredentials: true,
+          })
+          .then((res) => console.log(res.data))
           .catch((err) => console.log(err));
         navigate(location?.state ? location?.state : "/");
       })

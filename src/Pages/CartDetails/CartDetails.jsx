@@ -15,7 +15,9 @@ const CartDetails = () => {
   };
 
   useEffect(() => {
-    axios.get(url).then((res) => setOrders(res.data.data));
+    axios
+      .get(url, { withCredentials: true })
+      .then((res) => setOrders(res.data.data));
   }, [url]);
 
   return (
