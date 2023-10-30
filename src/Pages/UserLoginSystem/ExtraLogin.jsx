@@ -1,11 +1,10 @@
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import toast from "react-hot-toast";
-import { useContext } from "react";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import useAuth from "../../Hooks/useAuth";
 
 const ExtraLogin = () => {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   const handleGoogleLogin = () => {
     toast.success("user in console");

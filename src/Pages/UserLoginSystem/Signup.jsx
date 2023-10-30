@@ -2,15 +2,13 @@ import PropTypes from "prop-types";
 import ExtraLogin from "./ExtraLogin";
 import toast from "react-hot-toast";
 import loginsvg from "../../assets/images/login/login.svg";
-import { useContext } from "react";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
 
 const Signup = ({ handleFormToggle, location }) => {
   const navigate = useNavigate();
 
-  const { signUpWithEmailAndPassword, updateUserNameAndPhoto } =
-    useContext(AuthContext);
+  const { signUpWithEmailAndPassword, updateUserNameAndPhoto } = useAuth();
 
   const handleSignUp = (e) => {
     e.preventDefault();

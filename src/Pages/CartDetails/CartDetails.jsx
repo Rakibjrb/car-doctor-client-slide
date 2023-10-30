@@ -1,13 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PageHeader from "../../Components/PageHeader/PageHeader";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
-import axios from "axios";
 import Orders from "./Orders";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const CartDetails = () => {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
   const [orders, setOrders] = useState([]);
-  const url = `http://localhost:5174/cart/orders/?userEmail=${user.email}`;
+  const axiosSecure = useAxiosSecure();
+  const url = `/cart/orders/?userEmail=${user.email}`;
 
   const ordersAfterDelete = (deletedId) => {
     const filteredOrders = orders.filter((order) => order._id !== deletedId);
@@ -15,10 +16,10 @@ const CartDetails = () => {
   };
 
   useEffect(() => {
-    axios
+    axiosSecure
       .get(url, { withCredentials: true })
       .then((res) => setOrders(res.data.data));
-  }, [url]);
+  }, [url, axiosSecure]);
 
   return (
     <div className="pb-10">

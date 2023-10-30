@@ -1,16 +1,17 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Services = () => {
   const [services, setServices] = useState([]);
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5174/services")
+    axiosSecure
+      .get("/services")
       .then((response) => setServices(response.data.data));
-  }, []);
+  }, [axiosSecure]);
 
   return (
     <div className="mb-24">

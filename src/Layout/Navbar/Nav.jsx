@@ -1,8 +1,7 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.svg";
-import { useContext } from "react";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
+import useAuth from "../../Hooks/useAuth";
 
 const Nav = () => {
   const navlinks = (
@@ -25,7 +24,7 @@ const Nav = () => {
     </>
   );
 
-  const { user, userLogOut } = useContext(AuthContext);
+  const { user, userLogOut } = useAuth();
   const navigate = useNavigate();
 
   const handleLogOut = () => {

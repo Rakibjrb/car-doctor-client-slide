@@ -3,18 +3,18 @@ import PageHeader from "../../Components/PageHeader/PageHeader";
 import { NavLink, Link, useLoaderData, useParams } from "react-router-dom";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import "./servicedetails.css";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const ServiceDetails = () => {
   const services = useLoaderData();
   const { id } = useParams();
   const [data, setData] = useState([]);
+  const axiosSecure = useAxiosSecure();
   const { _id, img, title, description, facility, price } = data;
 
   useEffect(() => {
-    fetch(`http://localhost:5174/services/${id}`)
-      .then((res) => res.json())
-      .then((data) => setData(data.data));
-  }, [id]);
+    axiosSecure.get(`/services/${id}`).then((data) => setData(data.data));
+  }, [id, axiosSecure]);
 
   return (
     <div>

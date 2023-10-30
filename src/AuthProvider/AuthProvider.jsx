@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import auth from "../Secrete/secrete";
 import PropTypes from "prop-types";
+import axios from "axios";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -53,8 +54,25 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (user) => {
+      const logoutUser = user?.email;
       setUser(user);
       setLoading(false);
+      if (user) {
+        const currentuser = { email: user.email };
+        axios
+          .post("http://localhost:5174/jwt/token", currentuser, {
+            withCredentials: true,
+          })
+          .then((res) => console.log(res.data))
+          .catch((err) => console.log(err));
+      } else {
+        axios
+          .post("http://localhost:5174/jwt/token/clear", logoutUser, {
+            withCredentials: true,
+          })
+          .then((res) => console.log(res.data.data))
+          .catch((err) => console.log(err));
+      }
     });
     return () => unSubscribe();
   }, []);

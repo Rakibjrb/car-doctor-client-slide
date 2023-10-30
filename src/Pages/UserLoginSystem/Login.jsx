@@ -1,14 +1,12 @@
 import PropTypes from "prop-types";
 import ExtraLogin from "./ExtraLogin";
 import loginsvg from "../../assets/images/login/login.svg";
-import { useContext } from "react";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import useAuth from "../../Hooks/useAuth";
 
 const Login = ({ handleFormToggle, location }) => {
-  const { userLoginWithEmailAndPassword } = useContext(AuthContext);
+  const { userLoginWithEmailAndPassword } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
@@ -18,13 +16,6 @@ const Login = ({ handleFormToggle, location }) => {
     userLoginWithEmailAndPassword(email, password)
       .then(() => {
         toast.success("User login success .......");
-        const user = { email };
-        axios
-          .post("http://localhost:5174/jwt/token", user, {
-            withCredentials: true,
-          })
-          .then((res) => console.log(res.data))
-          .catch((err) => console.log(err));
         navigate(location?.state ? location?.state : "/");
       })
       .catch((err) => {

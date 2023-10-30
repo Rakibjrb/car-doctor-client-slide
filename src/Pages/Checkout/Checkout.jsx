@@ -1,38 +1,30 @@
 import { useLoaderData } from "react-router-dom";
 import PageHeader from "../../Components/PageHeader/PageHeader";
-import { useContext } from "react";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
-import axios from "axios";
 import toast from "react-hot-toast";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Checkout = () => {
   const data = useLoaderData();
   const { price, title } = data.data;
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
   const handleCheckout = (e) => {
     e.preventDefault();
-    const userName = e.target.name.value;
-    const userEmail = e.target.email.value;
-    const userImage = e.target.image.value;
-    const date = e.target.date.value;
-    const phone = e.target.phone.value;
-    const total_price = e.target.total_price.value;
-    const description = e.target.description.value;
-
     const info = {
-      userName,
-      userEmail,
-      userImage,
-      date,
-      phone,
-      total_price,
-      description,
+      userName: e.target.name.value,
+      userEmail: e.target.email.value,
+      userImage: e.target.image.value,
+      date: e.target.date.value,
+      phone: e.target.phone.value,
+      total_price: e.target.total_price.value,
+      description: e.target.description.value,
       serviceName: title,
       status: "Pending",
     };
 
-    axios
+    axiosSecure
       .post("http://localhost:5174/checkouts", info, { withCredentials: true })
       .then((res) => {
         console.log(res);

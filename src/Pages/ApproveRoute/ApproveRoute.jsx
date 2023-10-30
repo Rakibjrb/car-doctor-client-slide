@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import AllOrders from "./AllOrders";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const ApproveRoute = () => {
   const [orders, setOrders] = useState([]);
+  const axiosSecure = useAxiosSecure();
 
   const ordersAfterDelete = (deletedId) => {
     const filteredOrders = orders.filter((order) => order._id !== deletedId);
@@ -12,8 +13,8 @@ const ApproveRoute = () => {
   };
 
   const orderAfterApprove = (id) => {
-    const url = `http://localhost:5174/admin/order/approve`;
-    axios
+    const url = `/admin/order/approve`;
+    axiosSecure
       .patch(url, { id, status: "Approved" }, { withCredentials: true })
       .then((res) => {
         if (res.data.data.modifiedCount > 0) {
@@ -33,11 +34,11 @@ const ApproveRoute = () => {
   };
 
   useEffect(() => {
-    const url = `http://localhost:5174/cart/orders/admin/rakibul572157`;
-    axios
+    const url = `/cart/orders/admin/rakibul572157`;
+    axiosSecure
       .get(url, { withCredentials: true })
       .then((res) => setOrders(res.data.data));
-  }, []);
+  }, [axiosSecure]);
 
   return (
     <div className="pb-10">
